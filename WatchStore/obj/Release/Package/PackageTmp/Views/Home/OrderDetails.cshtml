@@ -1,0 +1,62 @@
+﻿@model IEnumerable<WatchStore.Models.order_details>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="card">
+    <div class="card-body">
+        <h3 class="mb-3">Order Details</h3>
+        <table class="table bg-white table-bordered table-hover" id="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model=>model.products.productId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.products.productName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.products.productPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.qty)
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.products.productId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.products.productName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.products.productPrice)$
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.qty)
+                        </td>
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            <a href="/Home/MyOrders" class="btn btn-sm btn-info">Back to MyOrders</a>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+$(function () {
+    $("#table").DataTable({
+        responsive:true,
+        "autoWidth": false,
+    });
+
+  });</script>

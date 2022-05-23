@@ -1,0 +1,114 @@
+﻿@model IEnumerable<WatchStore.Models.orders>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="card p-3">
+    <h4 class="mb-3 mt-3">Customer Orders</h4>
+    <table class="table table-responsive table-hover  table-bordered" id="table">
+        <thead>
+            <tr>
+                <th style="font-size:14px">
+                    @Html.DisplayNameFor(model => model.orderId)
+                </th>
+                <th style="font-size:14px">
+                    @Html.DisplayNameFor(model => model.totalPrice)
+                </th>
+                <th style="font-size:14px">
+                    @Html.DisplayNameFor(model => model.orderDate)
+                </th>
+                <th style="font-size:14px">
+                    @*@Html.DisplayNameFor(model => model.FullName)*@
+                    Name
+                </th>
+                <th style="font-size:14px">
+                    @*@Html.DisplayNameFor(model => model.PhoneNumber)*@
+                    Phone
+                </th>
+                <th style="font-size:14px">
+                    @Html.DisplayNameFor(model => model.addressDetail)
+                </th>
+                <th style="font-size:14px">
+                    @Html.DisplayNameFor(model => model.orderStatus)
+                </th>
+
+                <th style="font-size:14px">Actions</th>
+            
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    #@Html.DisplayFor(modelItem => item.orderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.totalPrice)$
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.orderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.phoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.addressDetail)
+                </td>
+                <td>
+
+                    @if (item.orderStatus == 0)
+                    {
+                        <p>Received</p>
+                    }
+                    @if (item.orderStatus == 1)
+                    {
+                        <p>Processing</p>
+                    }
+                    @if (item.orderStatus == 2)
+                    {
+                        <p>Shipped</p>
+                    }
+                    @if (item.orderStatus == 3)
+                    {
+                        <p>Cancelled</p>
+                    }
+                    @if (item.orderStatus == 4)
+                    {
+                        <p>Completed</p>
+                    }
+                </td>
+
+                <td style="display:flex;flex-direction:row">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.orderId }, new { @class = "btn btn-sm btn-primary" })
+                    @Html.ActionLink("Details", "Details", new { id = item.orderId }, new { @class = "btn btn-sm btn-info ml-1" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.orderId }, new { @class = "btn btn-sm btn-danger ml-1" })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+$(function () {
+    $("#table").DataTable({
+        "autoWidth": false,
+        'columnDefs': [{
+
+            'targets': [7], /* column index */
+
+            'orderable': false, /* true or false */
+
+        }]
+    });
+
+  });</script>

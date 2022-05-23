@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="~/Content/template/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/template/plugins/fontawesome-free/css/all.css" rel="stylesheet" />
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/Content/template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/Content/template/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link href="~/Content/template/bootstrap/dist/css/site.css" rel="stylesheet" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" href="/">
+                    @*<img src="~/Content/img/WatchStore logo.jpeg" style="height:40px;width:40px;border-radius:20px" />*@
+                    WatchStore
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="/">Home</a>
+                        </li>
+                        <li class="mt-1 ml-md-4">
+                            <form class="form-inline" action="/Home/Search" method="post">
+                                <input class="form-control mr-sm-2" type="search" name="searchQuery" placeholder="Search" aria-label="Search" required>
+                                <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                        </li>
+                        <li class="nav-item ml-md-4">  <a class="nav-link text-white" href="/Home/About">About Us</a></li>
+                        <li class="nav-item flex-grow-1 ml-md-4">  <a class="nav-link text-white" href="/Home/Contact">Contact Us</a></li>
+                        @{
+                            if (Session["customerId"] != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/Home/MyOrders">My Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/Auth/Logout">Logout</a>
+                                </li>
+
+                                <li class="nav-item" style="position:relative">
+                                    <a class="nav-link text-white" href="/Home/Cart">
+                                        <i class="nav-icon fas fa-cart-plus"></i>
+                                        <p id="cart-count" style=" position: absolute; top: 0px;" class="badge badge-pill badge-light  mr-sm-0">
+                                            @{
+                                                var cartItemCount = Session["totalCartItems"].ToString();
+                                                @cartItemCount
+                                            }
+                                        </p>
+                                    </a>
+                                </li>
+                            }
+
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/Auth/Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="/Auth/Register">Register</a>
+                                </li>
+
+                            }
+
+
+
+                        }
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted bg-dark">
+        <div class="container text-white">
+            &copy; 2021 -WatchStore- <a href="/Home/Privacy" class="text-white">Privacy</a>
+        </div>
+    </footer>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Content/template/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="~/Content/template/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/template/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/template/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/template/bootstrap/dist/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
