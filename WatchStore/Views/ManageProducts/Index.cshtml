@@ -1,0 +1,86 @@
+﻿@model IEnumerable<WatchStore.Models.products>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="card">
+    <div class="card-body">
+        <h3 class="mb-3">Products List</h3>
+
+        <p class="mb-3">
+            <a href="/ManageProducts/Create" class="btn btn-success btn-sm">Create New</a>
+        </p>
+        <table class="table table-responsive bg-white table-bordered table-hover" id="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productQty)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productImage)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productDesc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.categories.categoryName)
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.productName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.productPrice)$
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.productQty)
+                    </td>
+                    <td>
+                       
+                        <img src="@Url.Content(item.productImage)" style="height:50px;width:50px"/>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.productDesc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.categories.categoryName)
+                    </td>
+                    <td style="display:flex;flex-direction:row">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.productId }, new { @class = "btn btn-sm btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.productId }, new { @class = "btn btn-sm btn-info ml-1" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.productId }, new { @class = "btn btn-sm btn-danger ml-1" })
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+$(function () {
+    $("#table").DataTable({
+        "autoWidth": false,
+        'columnDefs': [{
+            'targets': [6], /* column index */
+
+            'orderable': false, /* true or false */
+
+        }]
+    });
+
+  });</script>
