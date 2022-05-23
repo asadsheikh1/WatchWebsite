@@ -1,0 +1,106 @@
+﻿@model WatchStore.Models.orders
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="row">
+    <div class="card p-3 mt-5 col-12">
+        <h4 class="mb-3 mt-3">You are buying these products</h4>
+        <table class="table table-hover  table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Product Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Qty
+                    </th>
+                    <th>
+                        Total Price
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    double SubTotalPrice = 0;
+                }
+                @foreach (var item in ViewBag.checkOutItems as ICollection<WatchStore.Models.CustomerCartItems>)
+                {
+                    SubTotalPrice = SubTotalPrice + item.productPrice * item.cartQty;
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.productName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.productPrice)$
+                        </td>
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.cartQty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.productTotalPrice)$
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between">
+            <p> <strong>SubTotals : </strong> <span class="text-muted" style="font-size:20px"> @SubTotalPrice$</span></p>
+
+        </div>
+    </div>
+
+</div>
+<br />
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4 card p-3 ">
+        <h5 class="text-center mt-2">Checkout</h5>
+        <hr style="background-color:white" />
+        <h6>Address Detail</h6>
+        @using (Html.BeginForm("Checkout", "Home"))
+        {
+            @*@{var multiplySubTotal = SubTotalPrice * 100;}*@
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<input type="hidden" name="chargeTotalAmount" value="@multiplySubTotal" />*@
+            <div class="form-group">
+                <label class="control-label col-md-12">Full Name</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-12">Phone Number</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.phoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-12">Address Details</label>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.addressDetail, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.addressDetail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-success btn-block">Checkout</button>
+            </div>
+
+        }
+    </div>
+    <div class="col-md-4"></div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
